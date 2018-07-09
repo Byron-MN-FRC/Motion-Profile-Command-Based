@@ -7,8 +7,6 @@
 
 package org.usfirst.frc.team4859.robot.subsystems;
 
-import org.usfirst.frc.team4859.motionprofile.MotionProfileExample;
-
 import com.ctre.phoenix.motion.SetValueMotionProfile;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -40,6 +38,8 @@ public class Drivetrain extends Subsystem {
 
 		talon.set(ControlMode.MotionProfile, setOutput.value);
 		follower.set(ControlMode.Follower, 1);
+		
+		_example.control();
 	}
 	
 	public void startMotionProfile() {

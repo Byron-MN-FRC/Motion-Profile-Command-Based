@@ -1,5 +1,8 @@
-package org.usfirst.frc.team4859.motionprofile;
+package org.usfirst.frc.team4859.robot.subsystems;
 
+
+import org.usfirst.frc.team4859.motionprofile.GeneratedMotionProfile;
+import org.usfirst.frc.team4859.motionprofile.Instrumentation;
 
 import com.ctre.phoenix.motion.MotionProfileStatus;
 import com.ctre.phoenix.motion.SetValueMotionProfile;
@@ -293,7 +296,7 @@ public class MotionProfileExample {
 	 * Called by application to signal Talon to start the buffered MP (when it's
 	 * able to).
 	 */
-	public void startMotionProfile() {
+	void startMotionProfile() {
 		_bStart = true;
 	}
 
@@ -303,7 +306,7 @@ public class MotionProfileExample {
 	 *         motion-profile output, 1 for enable motion-profile, 2 for hold
 	 *         current motion profile trajectory point.
 	 */
-	public SetValueMotionProfile getSetValue() {
+	SetValueMotionProfile getSetValue() {
 		return _setValue;
 	}
 }
