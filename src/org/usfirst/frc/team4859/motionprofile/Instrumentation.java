@@ -22,7 +22,7 @@
  * 
  * 
  */
-package motionprofile;
+package org.usfirst.frc.team4859.motionprofile;
 
 import com.ctre.phoenix.motion.*;
 

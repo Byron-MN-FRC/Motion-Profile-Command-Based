@@ -1,4 +1,4 @@
-package motionprofile;
+package org.usfirst.frc.team4859.motionprofile;
 public class GeneratedMotionProfile {
 	public static final int kNumPoints = 335;
 	// Position (rotations) Velocity (RPM) Duration (ms)

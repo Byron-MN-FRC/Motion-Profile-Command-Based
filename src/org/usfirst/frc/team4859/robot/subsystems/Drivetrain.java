@@ -7,13 +7,14 @@
 
 package org.usfirst.frc.team4859.robot.subsystems;
 
+import org.usfirst.frc.team4859.motionprofile.MotionProfileExample;
+
 import com.ctre.phoenix.motion.SetValueMotionProfile;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import motionprofile.MotionProfileExample;
 
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
