@@ -19,13 +19,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Drivetrain extends Subsystem {
 	
-	TalonSRX talon = new TalonSRX(1);
-	TalonSRX follower = new TalonSRX(2);
+	TalonSRX talonRight = new TalonSRX(1);
+	TalonSRX followerRight = new TalonSRX(2);
+	TalonSRX talonLeft = new TalonSRX(4);
+	TalonSRX followerLeft = new TalonSRX(5);
 	
-	MotionProfileExample _example = new MotionProfileExample(talon);
+	MotionProfileExample _exampleRight = new MotionProfileExample(talonRight);
+	MotionProfileExample _exampleLeft = new MotionProfileExample(talonLeft);
 	
 	public Drivetrain() {
-		drivetrainMotorConfig();
+		drivetrainMotorConfigRight();
+		drivetrainMotorConfigLeft();
 	}
 
 	public void initDefaultCommand() {
@@ -33,40 +37,77 @@ public class Drivetrain extends Subsystem {
 		// setDefaultCommand(new MySpecialCommand());
 	}
 	
-	public void runMotionProfile() {
-		SetValueMotionProfile setOutput = _example.getSetValue();
+	public void runMotionProfileRight() {
+		SetValueMotionProfile setOutput = _exampleRight.getSetValue();
 
-		talon.set(ControlMode.MotionProfile, setOutput.value);
-		follower.set(ControlMode.Follower, 1);
+		talonRight.set(ControlMode.MotionProfile, setOutput.value);
+		followerRight.set(ControlMode.Follower, 1);
 		
-		_example.control();
+		_exampleRight.control();
 	}
 	
-	public void startMotionProfile() {
-		_example.startMotionProfile();
-	}
-	
-	public void endMotionProfile() {
-		talon.set(ControlMode.PercentOutput, 0);
-		/* clear our buffer and put everything into a known state */
-		_example.reset();
-	}
-	
-	public void drivetrainMotorConfig() {
-		talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-		talon.setSensorPhase(false); /* keep sensor and motor in phase */
+	public void runMotionProfileLeft() {
+		SetValueMotionProfile setOutput = _exampleLeft.getSetValue();
 
-		talon.config_kF(0, 0.12, 10);
-		talon.config_kP(0, 0.24, 10);
-		talon.config_kI(0, 0.0, 10);
-		talon.config_kD(0, 0.0, 10);
+		talonLeft.set(ControlMode.MotionProfile, setOutput.value);
+		followerLeft.set(ControlMode.Follower, 1);
+		
+		_exampleLeft.control();
+	}
+	
+	public void startMotionProfileRight() {
+		_exampleRight.startMotionProfile();
+	}
+	
+	public void startMotionProfileLeft() {
+		_exampleLeft.startMotionProfile();
+	}
+	
+	public void endMotionProfileRight() {
+		talonRight.set(ControlMode.PercentOutput, 0);
+		/* clear our buffer and put everything into a known state */
+		_exampleRight.reset();
+	}
+	
+	public void endMotionProfileLeft() {
+		talonLeft.set(ControlMode.PercentOutput, 0);
+		/* clear our buffer and put everything into a known state */
+		_exampleLeft.reset();
+	}
+	
+	public void drivetrainMotorConfigRight() {
+		talonRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+		talonRight.setSensorPhase(false); /* keep sensor and motor in phase */
+
+		talonRight.config_kF(0, 0.12, 10);
+		talonRight.config_kP(0, 0.24, 10);
+		talonRight.config_kI(0, 0.0, 10);
+		talonRight.config_kD(0, 0.0, 10);
 
 		/* Our profile uses 10ms timing */
-		talon.configMotionProfileTrajectoryPeriod(10, 10); 
+		talonRight.configMotionProfileTrajectoryPeriod(10, 10); 
 		/*
 		 * status 10 provides the trajectory target for motion profile AND
 		 * motion magic
 		 */
-		talon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 10);
+		talonRight.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 10);
+	}
+	
+	public void drivetrainMotorConfigLeft() {
+		talonLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+		talonLeft.setSensorPhase(false); /* keep sensor and motor in phase */
+
+		talonLeft.config_kF(0, 0.12, 10);
+		talonLeft.config_kP(0, 0.24, 10);
+		talonLeft.config_kI(0, 0.0, 10);
+		talonLeft.config_kD(0, 0.0, 10);
+
+		/* Our profile uses 10ms timing */
+		talonLeft.configMotionProfileTrajectoryPeriod(10, 10); 
+		/*
+		 * status 10 provides the trajectory target for motion profile AND
+		 * motion magic
+		 */
+		talonLeft.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 10);
 	}
 }
