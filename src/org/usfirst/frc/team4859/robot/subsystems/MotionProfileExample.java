@@ -1,7 +1,8 @@
 package org.usfirst.frc.team4859.robot.subsystems;
 
 
-import org.usfirst.frc.team4859.motionprofile.GeneratedMotionProfile;
+import org.usfirst.frc.team4859.motionprofile.GeneratedMotionProfileLeft;
+import org.usfirst.frc.team4859.motionprofile.GeneratedMotionProfileRight;
 import org.usfirst.frc.team4859.motionprofile.Instrumentation;
 
 import com.ctre.phoenix.motion.MotionProfileStatus;
@@ -26,6 +27,7 @@ public class MotionProfileExample {
 	 * motion profile.
 	 */
 	private TalonSRX _talon;
+	private boolean _isLeft;
 	/**
 	 * State machine to make sure we let enough of the motion profile stream to
 	 * talon before we fire it.
@@ -84,8 +86,9 @@ public class MotionProfileExample {
 	 * @param talon
 	 *            reference to Talon object to fetch motion profile status from.
 	 */
-	public MotionProfileExample(TalonSRX talon) {
+	public MotionProfileExample(TalonSRX talon, boolean isLeft) {
 		_talon = talon;
+		_isLeft = isLeft;
 		/*
 		 * since our MP is 10ms per point, set the control frame rate and the
 		 * notifer to half that
@@ -163,7 +166,7 @@ public class MotionProfileExample {
 						_bStart = false;
 	
 						_setValue = SetValueMotionProfile.Disable;
-						startFilling();
+						startFilling(_isLeft);
 						/*
 						 * MP is being sent to CAN bus, wait a small amount of time
 						 */
@@ -239,9 +242,11 @@ public class MotionProfileExample {
 		return retval;
 	}
 	/** Start filling the MPs to all of the involved Talons. */
-	private void startFilling() {
+	private void startFilling(boolean isLeft) {
 		/* since this example only has one talon, just update that one */
-		startFilling(GeneratedMotionProfile.Points, GeneratedMotionProfile.kNumPoints);
+		if (isLeft) startFilling(GeneratedMotionProfileLeft.Points, GeneratedMotionProfileLeft.kNumPoints);
+		else startFilling(GeneratedMotionProfileRight.Points, GeneratedMotionProfileRight.kNumPoints);
+		
 	}
 
 	private void startFilling(double[][] profile, int totalCnt) {

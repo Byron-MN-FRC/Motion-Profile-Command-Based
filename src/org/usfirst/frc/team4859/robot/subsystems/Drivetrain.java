@@ -24,8 +24,8 @@ public class Drivetrain extends Subsystem {
 	TalonSRX talonLeft = new TalonSRX(4);
 	TalonSRX followerLeft = new TalonSRX(5);
 	
-	MotionProfileExample _exampleRight = new MotionProfileExample(talonRight);
-	MotionProfileExample _exampleLeft = new MotionProfileExample(talonLeft);
+	MotionProfileExample _exampleRight = new MotionProfileExample(talonRight, false);
+	MotionProfileExample _exampleLeft = new MotionProfileExample(talonLeft, true);
 	
 	public Drivetrain() {
 		drivetrainMotorConfigRight();
@@ -91,6 +91,9 @@ public class Drivetrain extends Subsystem {
 		 * motion magic
 		 */
 		talonRight.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 10);
+		
+		talonRight.setInverted(true);
+		followerRight.setInverted(true);
 	}
 	
 	public void drivetrainMotorConfigLeft() {
@@ -109,5 +112,6 @@ public class Drivetrain extends Subsystem {
 		 * motion magic
 		 */
 		talonLeft.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 10);
+		
 	}
 }
