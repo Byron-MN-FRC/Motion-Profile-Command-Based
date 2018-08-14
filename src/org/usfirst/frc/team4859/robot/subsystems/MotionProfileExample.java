@@ -274,12 +274,12 @@ public class MotionProfileExample {
 		
 		/* This is fast since it's just into our TOP buffer */
 		for (int i = 0; i < totalCnt; ++i) {
-			double positionRot = profile[i][0];
-			double velocityRPM = profile[i][1];
+			double positionInches = profile[i][0];
+			double velocityInches = profile[i][1];
 //			System.out.println("Point #: " + i);
 			/* for each point, fill our structure and pass it to API */
-			point.position = (positionRot / (1 * Math.PI)) * 4096; //Convert Revolutions to Units
-			point.velocity = ((velocityRPM / (1 * Math.PI)) / 600) * 4096; //Convert RPM to Units/100ms
+			point.position = (positionInches / (6 * Math.PI)) * 2 * 3 * 4096; //Convert Revolutions to Units
+			point.velocity = ((velocityInches / (6 * Math.PI)) * 2 * 3 * 4096) / 10; //Convert RPM to Units/100ms
 			point.headingDeg = 0; /* future feature - not used in this example*/
 			point.profileSlotSelect0 = 0; /* which set of gains would you like to use [0,3]? */
 			point.profileSlotSelect1 = 0; /* future feature  - not used in this example - cascaded PID [0,1], leave zero */
