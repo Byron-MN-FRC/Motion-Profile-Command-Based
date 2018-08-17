@@ -100,8 +100,8 @@ public class Drivetrain extends Subsystem {
 		talonLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 		talonLeft.setSensorPhase(false); /* keep sensor and motor in phase */
 
-		talonLeft.config_kF(0, 0.12, 10);
-		talonLeft.config_kP(0, 0.24, 10);
+		talonLeft.config_kF(0, 0.107, 10);
+		talonLeft.config_kP(0, 0.3, 10);
 		talonLeft.config_kI(0, 0.0, 10);
 		talonLeft.config_kD(0, 0.0, 10);
 
