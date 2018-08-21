@@ -10,8 +10,12 @@ package org.usfirst.frc.team4859.robot.subsystems;
 import com.ctre.phoenix.motion.SetValueMotionProfile;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.sensors.PigeonIMU;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -23,6 +27,8 @@ public class Drivetrain extends Subsystem {
 	TalonSRX followerRight = new TalonSRX(2);
 	TalonSRX talonLeft = new TalonSRX(4);
 	TalonSRX followerLeft = new TalonSRX(5);
+	
+	PigeonIMU pigeon = new PigeonIMU(2);
 	
 	MotionProfileExample _exampleRight = new MotionProfileExample(talonRight, false);
 	MotionProfileExample _exampleLeft = new MotionProfileExample(talonLeft, true);
@@ -79,10 +85,14 @@ public class Drivetrain extends Subsystem {
 		talonRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 		talonRight.setSensorPhase(false); /* keep sensor and motor in phase */
 
+		// Encoder PID
 		talonRight.config_kF(0, 0.107, 10);
 		talonRight.config_kP(0, 0.3, 10);
 		talonRight.config_kI(0, 0.0, 10);
 		talonRight.config_kD(0, 0.0, 10);
+		
+		// Pigeon P
+		talonRight.config_kP(1, 1.0, 10);
 
 		/* Our profile uses 10ms timing */
 		talonRight.configMotionProfileTrajectoryPeriod(10, 10); 
@@ -94,16 +104,23 @@ public class Drivetrain extends Subsystem {
 		
 		talonRight.setInverted(true);
 		followerRight.setInverted(true);
+		
+		talonRight.configRemoteFeedbackFilter(pigeon.getDeviceID(), RemoteSensorSource.Pigeon_Yaw, 0, 10);
+		talonRight.configSelectedFeedbackSensor(RemoteFeedbackDevice.RemoteSensor0, 1, 10);
 	}
 	
 	public void drivetrainMotorConfigLeft() {
 		talonLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 		talonLeft.setSensorPhase(false); /* keep sensor and motor in phase */
 
+		// Encoder PID
 		talonLeft.config_kF(0, 0.107, 10);
 		talonLeft.config_kP(0, 0.3, 10);
 		talonLeft.config_kI(0, 0.0, 10);
 		talonLeft.config_kD(0, 0.0, 10);
+		
+		// Pigeon P
+		talonLeft.config_kP(1, 1.0, 10);
 
 		/* Our profile uses 10ms timing */
 		talonLeft.configMotionProfileTrajectoryPeriod(10, 10); 
@@ -112,6 +129,9 @@ public class Drivetrain extends Subsystem {
 		 * motion magic
 		 */
 		talonLeft.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 10);
+		
+		talonLeft.configRemoteFeedbackFilter(pigeon.getDeviceID(), RemoteSensorSource.Pigeon_Yaw, 0, 10);
+		talonLeft.configSelectedFeedbackSensor(RemoteFeedbackDevice.RemoteSensor0, 1, 10);
 		
 	}
 }

@@ -280,9 +280,9 @@ public class MotionProfileExample {
 			/* for each point, fill our structure and pass it to API */
 			point.position = (positionInches / (6 * Math.PI)) * 2 * 3 * 4096; //Convert Revolutions to Units
 			point.velocity = ((velocityInches / (6 * Math.PI)) * 2 * 3 * 4096) / 10; //Convert RPM to Units/100ms
-			point.headingDeg = 0; /* future feature - not used in this example*/
+			point.headingDeg = profile[i][3]; /* future feature - not used in this example*/
 			point.profileSlotSelect0 = 0; /* which set of gains would you like to use [0,3]? */
-			point.profileSlotSelect1 = 0; /* future feature  - not used in this example - cascaded PID [0,1], leave zero */
+			point.profileSlotSelect1 = 1; /* future feature  - not used in this example - cascaded PID [0,1], leave zero */
 			point.timeDur = GetTrajectoryDuration((int)profile[i][2]);
 			point.zeroPos = false;
 			if (i == 0)
